@@ -3,8 +3,8 @@ const dotenv = require("dotenv");
 const cors = require("cors")
 const errorHandler = require("./middlewares/error-handler");
 const notFound = require("./middlewares/not-found");
-const controllers = require("./controllers/products");
 const connectDB = require("./db/connect"); 
+const productRouter = require("./routes/products")
 
 const app = express();
 
@@ -17,11 +17,7 @@ app.get("/", (req, res) => {
   res.send(`<h1>Store API</h1><a href="/api/v1/products">API</a>`);
 });
 
-app.get("/api/v1/products", controllers.getAllTasks);
-app.get("/api/v1/products/:id", controllers.getSingleTask);
-app.post("/api/v1/products", controllers.createTask);
-app.patch("/api/v1/products/:id", controllers.updateTask);
-app.delete("/api/v1/products/:id", controllers.deleteTask);
+app.use("/api/v1/products" , productRouter)
 
 app.use(notFound);
 app.use(errorHandler);
