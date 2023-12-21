@@ -1,4 +1,4 @@
-const Products = require("../products");
+const Products = require("../models/products");
 const NotFoundError = require("../errors/not-found-error");
 const BadRequestError = require("../errors/bad-request-error");
 const asyncWrapper = require("../utils/async-wrapper");
