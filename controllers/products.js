@@ -1,5 +1,6 @@
 const Products = require("../products");
 const NotFoundError = require("../errors/not-found-error");
+const BadRequestError = require("../errors/bad-request-error");
 const asyncWrapper = require("../utils/async-wrapper");
 
 const getAllTasks = asyncWrapper(async (req, res, next) => {
@@ -51,6 +52,11 @@ const createTask = asyncWrapper(async (req, res, next) => {
 
 const updateTask = asyncWrapper(async (req, res, next) => {
   const productId = req.params.id;
+
+  if (Object.keys(req.body).length === 0) {
+    throw new BadRequestError("Please provide a field to update");
+  }
+
   const newProduct = await Products.findByIdAndUpdate(productId, req.body, {
     new: true,
     runValidators: true,
