@@ -5,6 +5,8 @@ const errorHandler = require("./middlewares/error-handler");
 const notFound = require("./middlewares/not-found");
 const connectDB = require("./db/connect"); 
 const productRouter = require("./routes/products")
+const authRouter = require("./routes/auth")
+const isAuthenticated = require("./middlewares/auth")
 
 const app = express();
 
@@ -17,7 +19,8 @@ app.get("/", (req, res) => {
   res.send(`<h1>Store API</h1><a href="/api/v1/products">API</a>`);
 });
 
-app.use("/api/v1/products" , productRouter)
+app.use("/api/v1/auth" , authRouter)
+app.use("/api/v1/products" , isAuthenticated ,productRouter)
 
 app.use(notFound);
 app.use(errorHandler);
